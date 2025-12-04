@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="documents">Documents</string>
+    <string name="no_documents">Hhm ...    \nIt seems like if there are no documents jet...</string>
+    <string name="add_document">Add Document</string>
+    <string name="new_document_title">Create a new Document</string>
+    <string name="button_cancel">Cancel</string>
+    <string name="button_create">Create</string>
+    <string name="default_file_prefix">"Untitled "</string>
+    <string name="error_empty_string">The name cannot be empty</string>
+    <string name="error_invalid_string">This characters are not allowed: \" * / \\ : &lt; &gt; ? |</string>
+    <string name="error_repeated_string">This name is already in use.</string>
+    <string name="menu_item_export">Export</string>
+    <string name="menu_item_delete">Delete</string>
+    <string name="button_delete">Delete</string>
+    <string name="delete_document">Delete this Document</string>
+    <string name="delete_message">Do you really want to delete this document?\nThis action cannot be undone!</string>
+    <string name="delete_message_program">Do you really want to delete the document \"%s\"?\nThis action cannot be undone!</string>
+</resources>

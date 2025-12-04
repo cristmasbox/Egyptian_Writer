@@ -1,0 +1,32 @@
+[versions]
+agp = "8.13.1"
+commons-lang = "3.20.0"
+junit = "4.13.2"
+junitVersion = "1.3.0"
+espressoCore = "3.7.0"
+appcompat = "1.7.1"
+material = "1.13.0"
+activity = "1.12.0"
+constraintlayout = "2.2.1"
+gridlayout = "1.1.0"
+thoth = "2.0.2"
+glyphconverter = "1.6.0"
+expandablelayout = "2.9.2"
+
+[libraries]
+commons-lang = { group = "org.apache.commons", name = "commons-lang3", version.ref = "commons-lang" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
+constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+gridlayout = { group = "androidx.gridlayout", name = "gridlayout", version.ref = "gridlayout" }
+thoth = { group = "com.github.cristmasbox", name = "THOTH", version.ref = "thoth" }
+glyphconverter = { module = "com.github.cristmasbox:GlyphConverter", version.ref = "glyphconverter" }
+expandable-layout = { group = "com.github.cachapa", name = "ExpandableLayout", version.ref = "expandablelayout" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- colors of the light theme !-->
+
+    <color name="l_colorPrimary">#d0bea8</color>
+    <color name="l_colorPrimaryDark">#bd9e80</color>
+    <color name="l_textColor">#281e17</color>
+    <color name="l_textColorPrimary">#402a1f</color>
+    <color name="l_textColorSecondary">#ffffff</color>
+    <color name="l_textColorError">#ff0000</color>
+    <color name="l_windowBackground">#ffffff</color>
+    <color name="l_backgroundDark">#ede7de</color>
+    <color name="l_backgroundDarker">#dbcfbd</color>
+    <color name="l_popupWindowTransparent">#7FEDE7DE</color>
+    <color name="l_backgroundError">#ff0000</color>
+
+
+    <!-- colors of the dark theme !-->
+
+    <color name="d_colorPrimary">#d0bea8</color>
+    <color name="d_colorPrimaryDark">#bd9e80</color>
+    <color name="d_textColor">#281e17</color>
+    <color name="d_textColorPrimary">#402a1f</color>
+    <color name="d_textColorSecondary">#ffffff</color>
+    <color name="d_textColorError">#ff0000</color>
+    <color name="d_windowBackground">#fff</color>
+    <color name="d_backgroundDarker">#dbcfbd</color>
+
+</resources>

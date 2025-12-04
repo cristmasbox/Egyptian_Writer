@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="documents">Dokumente</string>
+    <string name="no_documents">Hhm ...   \nSieht aus, als ob noch keine Dokumente erstellt wurden...</string>
+    <string name="add_document">Dokument hinzufügen</string>
+    <string name="new_document_title">Ein neues Dokument erstellen</string>
+    <string name="button_cancel">Abbrechen</string>
+    <string name="button_create">Hinzufügen</string>
+    <string name="default_file_prefix">"Unbenannt "</string>
+    <string name="error_empty_string">Der Name darf nicht leer sein</string>
+    <string name="error_invalid_string">Diese Zeichen sind nicht erlaubt: \" * / \\ : &lt; &gt; ? |</string>
+    <string name="error_repeated_string">Ein Dokument mit diesem Namen exestiert schon.</string>
+    <string name="menu_item_export">Exportieren</string>
+    <string name="menu_item_delete">Löschen</string>
+    <string name="button_delete">Löschen</string>
+    <string name="delete_document">Dieses Dokument löschen</string>
+    <string name="delete_message">Möchten sie wirklich dieses Dokument löschen?\nDiese Aktion kann nicht rückgängig gemacht werden!</string>
+    <string name="delete_message_program">Möchten sie wirklich das Dokument \"%s\" löschen?\nDiese Aktion kann nicht rückgängig gemacht werden!</string>
+</resources>

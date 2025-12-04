@@ -1,0 +1,91 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.EgyptianWriter" parent="Theme.Material3.DayNight.NoActionBar" />
+
+    <!-- here is the dark theme !-->
+
+    <style name="popup_window_animation">
+        <item name="android:windowEnterAnimation">@anim/popup_anim</item>
+        <item name="android:windowExitAnimation">@anim/popdown_anim</item>
+    </style>
+
+    <style name="filledButton">
+        <item name="android:background">@drawable/custom_button_filled</item>
+        <item name="android:textColor">@color/l_textColorSecondary</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="android:paddingStart">8dp</item>
+        <item name="android:paddingEnd">8dp</item>
+        <item name="android:drawablePadding">4dp</item>
+        <item name="android:drawableTint">@color/l_textColorSecondary</item>
+    </style>
+
+    <style name="filledButtonWarning">
+        <item name="android:background">@drawable/custom_button_filled_warning</item>
+        <item name="android:textColor">@color/l_textColorSecondary</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="android:paddingStart">8dp</item>
+        <item name="android:paddingEnd">8dp</item>
+        <item name="android:drawablePadding">4dp</item>
+        <item name="android:drawableTint">@color/l_textColorSecondary</item>
+    </style>
+
+    <style name="borderedButton">
+        <item name="android:background">@drawable/custom_button_bordered</item>
+        <item name="android:textColor">@color/l_colorPrimaryDark</item>
+        <item name="android:stateListAnimator">@null</item>
+    </style>
+
+    <style name="textViewPrimary">
+        <item name="android:textColor">@color/l_textColorPrimary</item>
+    </style>
+
+    <style name="textViewNormal">
+        <item name="android:textColor">@color/l_textColor</item>
+    </style>
+
+    <style name="inputText">
+        <item name="android:background">@drawable/custom_input</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:textColor">@color/l_textColor</item>
+        <item name="android:textColorHighlight">@color/l_colorPrimary</item>
+    </style>
+
+    <style name="errorText">
+        <item name="android:textColor">@color/l_textColorError</item>
+    </style>
+
+    <style name="menu_item_normal">
+        <item name="android:textColor">@color/l_textColorPrimary</item>
+        <item name="android:paddingStart">20dp</item>
+        <item name="android:paddingEnd">24dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:drawablePadding">4dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="drawableTint">@color/l_textColorPrimary</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+    </style>
+
+    <style name="menu_item_warning">
+        <item name="android:textColor">@color/l_textColorError</item>
+        <item name="android:paddingStart">20dp</item>
+        <item name="android:paddingEnd">24dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:drawablePadding">4dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="drawableTint">@color/l_textColorError</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+    </style>
+
+    <style name="menu_separator">
+        <item name="android:background">@color/l_colorPrimary</item>
+        <item name="android:layout_marginStart">5dp</item>
+        <item name="android:layout_marginEnd">5dp</item>
+    </style>
+
+</resources>
