@@ -1,12 +1,18 @@
 package com.blueapps.egyptianwriter.dashboard;
 
+import static com.blueapps.egyptianwriter.export.FileResultActivity.MIME_DEFAULT;
+import static com.blueapps.egyptianwriter.export.FileResultActivity.MIME_EWDOC;
+
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.Insets;
@@ -15,6 +21,8 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blueapps.egyptianwriter.dashboard.createdocument.AddMenu;
+import com.blueapps.egyptianwriter.dashboard.createdocument.AddMenuListener;
 import com.blueapps.egyptianwriter.editor.DocumentEditorActivity;
 import com.blueapps.egyptianwriter.dashboard.createdocument.CreateDocument;
 import com.blueapps.egyptianwriter.dashboard.createdocument.CreateDocumentListener;
@@ -24,16 +32,28 @@ import com.blueapps.egyptianwriter.dashboard.deletedocument.DeleteDocumentListen
 import com.blueapps.egyptianwriter.dashboard.documentgrid.DocumentGridData;
 import com.blueapps.egyptianwriter.dashboard.documentgrid.DocumentListener;
 import com.blueapps.egyptianwriter.dashboard.documentgrid.DocumentManager;
-import com.blueapps.egyptianwriter.dashboard.documentgrid.RecyclerViewAdapter;
+import com.blueapps.egyptianwriter.dashboard.documentgrid.DocumentGridAdapter;
+import com.blueapps.egyptianwriter.export.FileResultActivity;
+import com.blueapps.egyptianwriter.fileimport.ImportListener;
+import com.blueapps.egyptianwriter.fileimport.ImportManager;
 import com.blueapps.egyptianwriter.layoutadapter.GridAdapter;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 
-public class DashboardActivity extends AppCompatActivity implements DocumentListener {
+public class DashboardActivity extends AppCompatActivity implements DocumentListener, CreateDocumentListener, ImportListener {
 
     DashboardBinding binding;
+    private static final String TAG = "DashboardActivity";
 
     private DocumentManager documentManager;
+    private ImportManager importManager;
 
     // Views
     private RecyclerView documentGrid;
@@ -59,14 +79,21 @@ public class DashboardActivity extends AppCompatActivity implements DocumentList
         });
 
         // Set names for Views
-        documentGrid = binding.grid;
+        documentGrid = binding.documentGrid;
         addDocument = binding.addDocument;
         noDocumentContainer = binding.noDocumentContainer;
 
-        // Set up grid
+        // Set up document grid
         documentManager = new DocumentManager(this);
 
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, getDocuments(documentManager));
+        // Set up import
+        importManager = new ImportManager(this, documentManager);
+        importManager.setActivityResultLauncher(registerForActivityResult(new ActivityResultContracts.OpenDocument(), importManager));
+
+        // Handle intents
+        handleIntents();
+
+        DocumentGridAdapter adapter = new DocumentGridAdapter(this, getDocuments(documentManager));
         adapter.removeDocumentListeners();
         adapter.addDocumentListener(this);
         GridLayoutManager gridManager = new GridLayoutManager(this, 2);
@@ -75,26 +102,36 @@ public class DashboardActivity extends AppCompatActivity implements DocumentList
         documentGrid.setLayoutManager(gridManager);
         documentGrid.setAdapter(adapter);
 
+
         addDocument.setOnClickListener(view -> {
-            this.runOnUiThread(() -> {
-                CreateDocument createDocument = new CreateDocument(DashboardActivity.this, documentManager.getNames());
-                createDocument.show();
-                createDocument.addOnCreateListener(new CreateDocumentListener() {
-                    @Override
-                    public void OnCancel() {
+            AddMenu addMenu = new AddMenu(this);
+            int[] location = new int[2];
+            addDocument.getLocationOnScreen(location);
+            addMenu.setPosition(location[0], location[1] + 40);
+            addMenu.addAddMenuListener(new AddMenuListener() {
 
-                    }
+                @Override
+                public void OnCancel() {
 
-                    @Override
-                    public void OnCreate(String name) {
-                        documentManager.addDocument(name);
-                        RecyclerViewAdapter adapter = new RecyclerViewAdapter(DashboardActivity.this, getDocuments(documentManager));
-                        adapter.removeDocumentListeners();
-                        adapter.addDocumentListener(DashboardActivity.this);
-                        documentGrid.setAdapter(adapter);
-                    }
-                });
+                }
+
+                @Override
+                public void OnImport() {
+                    importManager.addOnImportListener(DashboardActivity.this);
+                    importManager.showDialog();
+                }
+
+                @Override
+                public void OnCreate() {
+                    DashboardActivity.this.runOnUiThread(() -> {
+                        CreateDocument createDocument = new CreateDocument(DashboardActivity.this, documentManager.getNames());
+                        createDocument.show();
+                        createDocument.addOnCreateListener(DashboardActivity.this);
+                    });
+                }
             });
+
+            addMenu.show();
         });
 
     }
@@ -113,6 +150,56 @@ public class DashboardActivity extends AppCompatActivity implements DocumentList
         return documentGridData;
     }
 
+    public int DPtoPX(float dp) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getResources().getDisplayMetrics());
+    }
+
+    private void openFile() {
+
+    }
+
+    private void copyFile(Uri output, File input){
+
+        try (InputStream is = new FileInputStream(input); OutputStream os = getContentResolver().openOutputStream(output)) {
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = is.read(buffer)) > 0) {
+                os.write(buffer, 0, length);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            // TODO: ERROR HANDLING
+        }
+    }
+
+    private void handleIntents(){
+        // Get intent, action and MIME type
+        Intent intent = getIntent();
+        String action = intent.getAction();
+        String type = intent.getType();
+
+        if ((Intent.ACTION_SEND.equals(action) || Intent.ACTION_VIEW.equals(action)) && type != null) {
+            if (MIME_DEFAULT.equals(type) || MIME_EWDOC.equals(type)) {
+                Log.d(TAG, "Started from ACTION.SEND");
+                Uri fileUri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
+                if (fileUri != null) {
+                    Log.d(TAG, "File received! Uri: " + fileUri.getPath());
+                    File file = new File(fileUri.getPath());
+                    if (Strings.CS.endsWith(file.getName(), ".ewdoc")){
+                        importManager.copyFile(fileUri, importManager.getDestinationUri(file.getName()));
+                        Log.d(TAG, "File copied!");
+                    } else {
+                        Log.d(TAG, "Wrong file extension!");
+                        // TODO: Error handling
+                    }
+                }
+            }
+        }
+    }
+
+    // Listeners
+
+    // Document Listener
     @Override
     public void OnDeleteDocument(String name) {
 
@@ -127,7 +214,7 @@ public class DashboardActivity extends AppCompatActivity implements DocumentList
             @Override
             public void OnDelete() {
                 documentManager.deleteDocument(name);
-                RecyclerViewAdapter adapter = new RecyclerViewAdapter(DashboardActivity.this, getDocuments(documentManager));
+                DocumentGridAdapter adapter = new DocumentGridAdapter(DashboardActivity.this, getDocuments(documentManager));
                 adapter.removeDocumentListeners();
                 adapter.addDocumentListener(DashboardActivity.this);
                 documentGrid.setAdapter(adapter);
@@ -137,7 +224,10 @@ public class DashboardActivity extends AppCompatActivity implements DocumentList
 
     @Override
     public void OnExportDocument(String name) {
-
+        Intent myIntent = new Intent(DashboardActivity.this, FileResultActivity.class);
+        // Add extras
+        myIntent.putExtra(KEY_FILE_NAME, name + ".ewdoc");
+        DashboardActivity.this.startActivity(myIntent);
     }
 
     @Override
@@ -149,7 +239,35 @@ public class DashboardActivity extends AppCompatActivity implements DocumentList
         DashboardActivity.this.startActivity(myIntent);
     }
 
-    public int DPtoPX(float dp) {
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getResources().getDisplayMetrics());
+
+    // Import Listener
+    @Override
+    public void onImport(String name) {
+        documentManager.addDocument(name);
+        DocumentGridAdapter adapter = new DocumentGridAdapter(DashboardActivity.this, getDocuments(documentManager));
+        adapter.removeDocumentListeners();
+        adapter.addDocumentListener(DashboardActivity.this);
+        documentGrid.setAdapter(adapter);
+    }
+
+    @Override
+    public void onError() {
+
+    }
+
+
+    // CreateDocument listener
+    @Override
+    public void OnCancel() {
+
+    }
+
+    @Override
+    public void OnCreate(String name) {
+        documentManager.addDocument(name);
+        DocumentGridAdapter adapter = new DocumentGridAdapter(DashboardActivity.this, getDocuments(documentManager));
+        adapter.removeDocumentListeners();
+        adapter.addDocumentListener(DashboardActivity.this);
+        documentGrid.setAdapter(adapter);
     }
 }

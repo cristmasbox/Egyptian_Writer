@@ -2,6 +2,8 @@
   <dictionary name="project">
     <words>
       <w>ewdoc</w>
+      <w>fileprovider</w>
+      <w>openfontlicense</w>
       <w>popdown</w>
     </words>
   </dictionary>

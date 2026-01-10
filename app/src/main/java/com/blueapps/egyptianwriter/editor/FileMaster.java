@@ -2,6 +2,8 @@ package com.blueapps.egyptianwriter.editor;
 
 import android.content.Context;
 
+import com.blueapps.egyptianwriter.R;
+import com.blueapps.egyptianwriter.issuecenter.Issue;
 import com.blueapps.glpyhconverter.GlyphConverter;
 
 import org.w3c.dom.Document;
@@ -14,6 +16,7 @@ import org.xml.sax.InputSource;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -73,6 +76,7 @@ public class FileMaster {
     public void extractData(){
 
         try {
+            //throw new FileNotFoundException();
             FileInputStream inputStream = new FileInputStream(file);
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
             StringBuilder stringBuilder = new StringBuilder();
@@ -90,7 +94,7 @@ public class FileMaster {
                 //root elements
                 glyphX = docBuilder.newDocument();
 
-                Element rootElement = glyphX.createElement("ancientText");
+                Element rootElement = glyphX.createElement(ROOT_TAG_GLYPHX);
                 glyphX.appendChild(rootElement);
             } else {
                 rootDocument = loadXMLFromString(content);
@@ -134,8 +138,14 @@ public class FileMaster {
                 }
             }
 
-        } catch (Exception e){
-            throw new RuntimeException(e);// TODO
+        } catch (FileNotFoundException e){
+            // TODO: display popup window despite activity is not running
+            new Issue(context, context.getString(R.string.error_unexpected_title),
+                    context.getString(R.string.error_unexpected_text),
+                    "Trying to extract data: FileNotFoundException on java.io.FileInputStream: " + e.getLocalizedMessage()).show();
+        } catch (Exception e) {
+            // TODO: Error Handling
+            throw new RuntimeException(e);
         }
 
     }

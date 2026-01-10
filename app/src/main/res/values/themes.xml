@@ -33,6 +33,20 @@
         <item name="android:background">@drawable/custom_button_bordered</item>
         <item name="android:textColor">@color/l_colorPrimaryDark</item>
         <item name="android:stateListAnimator">@null</item>
+        <item name="android:paddingStart">8dp</item>
+        <item name="android:paddingEnd">8dp</item>
+        <item name="android:drawablePadding">4dp</item>
+        <item name="android:drawableTint">@color/l_colorPrimaryDark</item>
+    </style>
+
+    <style name="borderedButtonWhite">
+        <item name="android:background">@drawable/custom_button_bordered_white</item>
+        <item name="android:textColor">@color/l_colorPrimaryDark</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="android:paddingStart">8dp</item>
+        <item name="android:paddingEnd">8dp</item>
+        <item name="android:drawablePadding">4dp</item>
+        <item name="android:drawableTint">@color/l_colorPrimaryDark</item>
     </style>
 
     <style name="textViewPrimary">
@@ -66,6 +80,7 @@
         <item name="drawableTint">@color/l_textColorPrimary</item>
         <item name="android:focusable">true</item>
         <item name="android:clickable">true</item>
+        <item name="android:layout_margin">1dp</item>
     </style>
 
     <style name="menu_item_warning">
@@ -80,12 +95,28 @@
         <item name="drawableTint">@color/l_textColorError</item>
         <item name="android:focusable">true</item>
         <item name="android:clickable">true</item>
+        <item name="android:layout_marginLeft">1dp</item>
+        <item name="android:layout_marginRight">1dp</item>
     </style>
 
     <style name="menu_separator">
         <item name="android:background">@color/l_colorPrimary</item>
         <item name="android:layout_marginStart">5dp</item>
         <item name="android:layout_marginEnd">5dp</item>
+    </style>
+
+    <style name="scrollViewNormal">
+        <item name="android:background">@color/l_windowBackground</item>
+    </style>
+
+    <style name="imageButtonTitleBar">
+        <item name="android:background">@drawable/custom_image_button_bg_title_bar</item>
+        <item name="android:tint">@color/l_textColor</item>
+    </style>
+
+    <style name="imageButtonLight">
+        <item name="android:background">@drawable/custom_image_button_bg</item>
+        <item name="android:tint">@color/l_textColor</item>
     </style>
 
     <style name="Theme.EgyptianWriter" parent="Base.Theme.EgyptianWriter" />

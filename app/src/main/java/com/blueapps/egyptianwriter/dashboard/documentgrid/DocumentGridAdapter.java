@@ -15,13 +15,13 @@ import com.blueapps.egyptianwriter.R;
 
 import java.util.ArrayList;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.RecyclerViewHolder>{
+public class DocumentGridAdapter extends RecyclerView.Adapter<DocumentGridAdapter.RecyclerViewHolder>{
     private ArrayList<DocumentGridData> dataList;
     private Context context;
 
     private ArrayList<DocumentListener> listeners = new ArrayList<>();
 
-    public RecyclerViewAdapter(Context context, ArrayList<DocumentGridData> dataList) {
+    public DocumentGridAdapter(Context context, ArrayList<DocumentGridData> dataList) {
         this.context = context;
         this.dataList = dataList;
     }
@@ -93,9 +93,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     // View Holder Class to handle Recycler View.
     public static class RecyclerViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView dataTitle;
-        private ImageButton buttonMore;
-        private CardView cardView;
+        private final TextView dataTitle;
+        private final ImageButton buttonMore;
+        private final CardView cardView;
 
         public RecyclerViewHolder(@NonNull View itemView) {
             super(itemView);

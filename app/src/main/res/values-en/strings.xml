@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="documents">Documents</string>
-    <string name="no_documents">Hhm ...    \nIt seems like if there are no documents jet...</string>
+    <string name="no_documents">Hhm …    \nIt seems like if there are no documents jet…</string>
     <string name="add_document">Add Document</string>
     <string name="new_document_title">Create a new Document</string>
     <string name="button_cancel">Cancel</string>
@@ -16,4 +16,19 @@
     <string name="delete_document">Delete this Document</string>
     <string name="delete_message">Do you really want to delete this document?\nThis action cannot be undone!</string>
     <string name="delete_message_program">Do you really want to delete the document \"%s\"?\nThis action cannot be undone!</string>
+    <string name="learning_sets">Learning Sets</string>
+    <string name="no_learning_sets">Hhm …    \nIt seems like if there are no learning sets jet…</string>
+    <string name="add_learning_set">Add Learning Set</string>
+    <string name="title_export">Export</string>
+    <string name="button_save">SAVE</string>
+    <string name="button_share">SHARE</string>
+    <string name="share_title">Share file:</string>
+    <string name="button_ok">OK</string>
+    <string name="issue_code_title">This is the error code:</string>
+    <string name="label_error_code">error code</string>
+    <string name="error_unexpected_title">unexpected error</string>
+    <string name="error_unexpected_text">An unexpected error has occurred, indicating a problem with the app. Please restart the app and check for updates.</string>
+    <string name="issue_prefix">If none of the above options help, copy the error code and send an email with the error code to the developer (website-tutorials@gmx.de).</string>
+    <string name="menu_item_import">import document</string>
+    <string name="menu_item_create">new document</string>
 </resources>

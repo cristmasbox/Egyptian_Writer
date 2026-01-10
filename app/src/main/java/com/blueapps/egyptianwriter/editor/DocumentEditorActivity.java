@@ -24,6 +24,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.blueapps.egyptianwriter.R;
 import com.blueapps.egyptianwriter.dashboard.DashboardActivity;
 import com.blueapps.egyptianwriter.databinding.ActivityDocumentEditorBinding;
+import com.blueapps.egyptianwriter.issuecenter.Issue;
 import com.blueapps.thoth.ThothView;
 
 import net.cachapa.expandablelayout.ExpandableLayout;

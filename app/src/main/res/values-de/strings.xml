@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="documents">Dokumente</string>
-    <string name="no_documents">Hhm ...   \nSieht aus, als ob noch keine Dokumente erstellt wurden...</string>
+    <string name="no_documents">Hhm …   \nSieht aus, als ob noch keine Dokumente erstellt wurden…</string>
     <string name="add_document">Dokument hinzufügen</string>
     <string name="new_document_title">Ein neues Dokument erstellen</string>
     <string name="button_cancel">Abbrechen</string>
@@ -16,4 +16,19 @@
     <string name="delete_document">Dieses Dokument löschen</string>
     <string name="delete_message">Möchten sie wirklich dieses Dokument löschen?\nDiese Aktion kann nicht rückgängig gemacht werden!</string>
     <string name="delete_message_program">Möchten sie wirklich das Dokument \"%s\" löschen?\nDiese Aktion kann nicht rückgängig gemacht werden!</string>
+    <string name="learning_sets">Lernsets</string>
+    <string name="no_learning_sets">Hhm …   \nSieht aus, als ob noch keine Lernsets erstellt wurden…</string>
+    <string name="add_learning_set">Lernset hinzufügen</string>
+    <string name="title_export">Export</string>
+    <string name="button_save">SPEICHERN</string>
+    <string name="button_share">TEILEN</string>
+    <string name="share_title">Datei teilen:</string>
+    <string name="button_ok">OK</string>
+    <string name="issue_code_title">Das ist der Fehlercode:</string>
+    <string name="label_error_code">Fehlercode</string>
+    <string name="error_unexpected_title">Unerwarteter Fehler</string>
+    <string name="error_unexpected_text">Es ist ein unerwarteter Fehler aufgetreten, der auf ein Problem mit der App hindeutet. Bitte starten Sie die App neu und prüfen Sie, ob Aktualisierungen verfügbar sind.</string>
+    <string name="issue_prefix">Wenn keine der oben genannten Optionen hilft, kopieren Sie den Fehlercode und senden Sie eine E-Mail mit dem Fehlercode an den Entwickler (website-tutorials@gmx.de).</string>
+    <string name="menu_item_import">Dokument importieren</string>
+    <string name="menu_item_create">Dokument erstellen</string>
 </resources>

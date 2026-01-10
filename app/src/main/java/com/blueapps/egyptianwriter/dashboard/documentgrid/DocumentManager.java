@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 
 public class DocumentManager {
 
@@ -28,23 +29,29 @@ public class DocumentManager {
         names = new ArrayList<>();
         try {
             if (!path.exists()){
-                path.mkdir();
+                if (!path.mkdir()){
+                    // TODO: Error handling
+                }
             }
             File[] filesArray = path.listFiles((dir, name) -> name.toLowerCase().endsWith(".ewdoc"));
             ArrayList<File> files;
             if (filesArray != null) {
+                // Sort Files in alphabetical order
+                Arrays.sort(filesArray, Comparator.comparing(File::getName));
+
                 files = new ArrayList<>(Arrays.asList(filesArray));
 
                 Log.d(TAG, "This files where found: " + files);
 
                 for (File file : files) {
                     String name = file.getName();
+                    String filename = name;
                     if (!name.equals(".ewdoc")) {
                         int lastPointIndex = StringUtils.lastIndexOf(name, '.');
                         if (lastPointIndex > 0) {
                             name = name.substring(0, lastPointIndex);
                         }
-                        DocumentGridData document = new DocumentGridData(name);
+                        DocumentGridData document = new DocumentGridData(name, filename);
                         documents.add(document);
                         names.add(name);
                     }
