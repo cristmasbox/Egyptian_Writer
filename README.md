@@ -8,7 +8,7 @@ This app uses libraries I created:
 - [THOTH-Library](https://github.com/cristmasbox/THOTH)
 - [GlyphConverter-Library](https://github.com/cristmasbox/GlyphConverter)
 
-For other libraries used see `LicenseCompatibility.md`.
+For other libraries used see [`LicenseCompatibility.md`](https://github.com/cristmasbox/Egyptian_Writer/blob/main/LicenseCompatibility.md).
 
 ## Installation
 There are three ways to install the Egyptian Writer app:
