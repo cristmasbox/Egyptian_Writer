@@ -2,7 +2,7 @@
 <resources>
     <string name="documents">Dokumente</string>
     <string name="no_documents">Hhm …   \nSieht aus, als ob noch keine Dokumente erstellt wurden…</string>
-    <string name="add_document">Dokument hinzufügen</string>
+    <string name="add_document">Hinzufügen</string>
     <string name="new_document_title">Ein neues Dokument erstellen</string>
     <string name="button_cancel">Abbrechen</string>
     <string name="button_create">Hinzufügen</string>
@@ -31,4 +31,7 @@
     <string name="issue_prefix">Wenn keine der oben genannten Optionen hilft, kopieren Sie den Fehlercode und senden Sie eine E-Mail mit dem Fehlercode an den Entwickler (website-tutorials@gmx.de).</string>
     <string name="menu_item_import">Dokument importieren</string>
     <string name="menu_item_create">Dokument erstellen</string>
+    <string name="import_document_title">Dieses Dokument importieren</string>
+    <string name="import_document_message">Wählen einen Namen für das Dokument:</string>
+    <string name="button_import">Importieren</string>
 </resources>

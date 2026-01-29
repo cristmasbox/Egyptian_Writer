@@ -2,7 +2,7 @@
     <string name="app_name" translatable="false">Egyptian Writer</string>
     <string name="documents">Documents</string>
     <string name="no_documents">Hhm …    \nIt seems like if there are no documents jet…</string>
-    <string name="add_document">Add Document</string>
+    <string name="add_document">Add</string>
     <string name="new_document_title">Create a new Document</string>
     <string name="button_cancel">Cancel</string>
     <string name="button_create">Create</string>
@@ -31,4 +31,7 @@
     <string name="issue_prefix">If none of the above options help, copy the error code and send an email with the error code to the developer (website-tutorials@gmx.de).</string>
     <string name="menu_item_import">import document</string>
     <string name="menu_item_create">new document</string>
+    <string name="import_document_title">Import this document</string>
+    <string name="import_document_message">Choose a name for the document:</string>
+    <string name="button_import">Import</string>
 </resources>

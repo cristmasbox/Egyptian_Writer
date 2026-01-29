@@ -19,8 +19,23 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
 
+        <ImageButton
+            android:id="@+id/button_menu"
+            style="@style/imageButtonTitleBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/menu" />
+
         <TextView
             android:id="@+id/activity_title"
+            style="@style/textViewPrimary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -29,11 +44,10 @@
             android:text="@string/app_name"
             android:textSize="20sp"
             android:textStyle="bold"
-            style="@style/textViewPrimary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/button_menu"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -87,11 +101,11 @@
             android:textSize="20sp"
             android:textStyle="bold"
             style="@style/textViewNormal"
-            app:layout_constraintBottom_toBottomOf="@+id/add_document"
+            app:layout_constraintBottom_toBottomOf="@+id/add_document_small"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/add_document" />
+            app:layout_constraintTop_toTopOf="@+id/add_document_small" />
 
         <android.widget.Button
             android:id="@+id/add_document"
@@ -102,6 +116,23 @@
             android:layout_marginEnd="16dp"
             android:drawableStart="@drawable/add_2"
             android:text="@string/add_document"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ImageButton
+            android:id="@+id/add_document_small"
+            style="@style/imageButtonFilled"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/add_2"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
@@ -205,7 +236,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/add_document"
+            app:layout_constraintTop_toBottomOf="@+id/add_document_small"
             app:layout_constraintVertical_bias="0.0">
 
             <ImageView

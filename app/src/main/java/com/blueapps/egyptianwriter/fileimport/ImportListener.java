@@ -4,5 +4,6 @@ public interface ImportListener {
 
     void onImport(String name);
     void onError();
+    void onCancel();
 
 }

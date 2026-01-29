@@ -109,6 +109,11 @@
         <item name="android:background">@color/l_windowBackground</item>
     </style>
 
+    <style name="imageButtonFilled">
+        <item name="android:background">@drawable/custom_button_filled</item>
+        <item name="android:tint">@color/l_textColorSecondary</item>
+    </style>
+
     <style name="imageButtonTitleBar">
         <item name="android:background">@drawable/custom_image_button_bg_title_bar</item>
         <item name="android:tint">@color/l_textColor</item>

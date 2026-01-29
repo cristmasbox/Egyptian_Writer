@@ -5,19 +5,28 @@ import static com.blueapps.egyptianwriter.export.FileResultActivity.MIME_EWDOC;
 
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
+import android.provider.OpenableColumns;
 import android.util.Log;
 import android.webkit.MimeTypeMap;
 
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.documentfile.provider.DocumentFile;
 
+import com.blueapps.egyptianwriter.R;
 import com.blueapps.egyptianwriter.dashboard.documentgrid.DocumentGridData;
 import com.blueapps.egyptianwriter.dashboard.documentgrid.DocumentManager;
+import com.blueapps.egyptianwriter.issuecenter.PopupListener;
+import com.blueapps.egyptianwriter.issuecenter.StandardPopup;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -51,53 +60,10 @@ public class ImportManager implements ActivityResultCallback<Uri> {
     @Override
     public void onActivityResult(Uri result) {
         if (result != null) {
-            if (result.getPath() != null) {
-                File file = new File(result.getPath());
-                Log.d(TAG, "Selected file: " + file.getPath());
-                Log.d(TAG, "MIME-TYPE: " + getMimeType(result));
-
-                // Copy file to app specific directory
-                String filename = file.getName();
-                if (! filename.equals(".ewdoc")){
-                    int lastPointIndex = StringUtils.lastIndexOf(filename, '.');
-                    if (lastPointIndex > 0) {
-                        String extension = filename.substring(lastPointIndex + 1);
-                        String name = filename.substring(0, lastPointIndex);
-                        if (extension.equals("ewdoc")){
-                            copyFile(result, getDestinationUri(filename));
-
-                            // Inform listeners
-                            for (ImportListener listener: listeners){
-                                listener.onImport(name);
-                            }
-                        } else {
-                            // Inform listeners
-                            for (ImportListener listener: listeners){
-                                listener.onError();
-                            }
-                            // TODO: Error handling
-                        }
-                    } else {
-                        // Inform listeners
-                        for (ImportListener listener: listeners){
-                            listener.onError();
-                        }
-                        // TODO: Error handling
-                    }
-                } else {
-                    // Inform listeners
-                    for (ImportListener listener: listeners){
-                        listener.onError();
-                    }
-                    // TODO: Error handling
-                }
-            } else {
-                // Inform listeners
-                for (ImportListener listener: listeners){
-                    listener.onError();
-                }
-                // TODO: ERROR HANDLING
-            }
+            String filename = getFileName(context, result);
+            Log.d(TAG, "Selected Uri: " + result);
+            Log.d(TAG, "Filename: \"" + filename + "\"");
+            openPopup(getDestinationName(filename), result);
         } else {
             // Inform listeners
             for (ImportListener listener: listeners){
@@ -107,17 +73,88 @@ public class ImportManager implements ActivityResultCallback<Uri> {
         }
     }
 
-    public void copyFile(Uri from, Uri to){
+    public void handleImportIntents(Intent intent){
+        // Get intent, action and MIME type
+        String action = intent.getAction();
+        String type = intent.getType();
 
-        try (InputStream is = context.getContentResolver().openInputStream(from); OutputStream os = context.getContentResolver().openOutputStream(to)) {
-            byte[] buffer = new byte[1024];
-            int length;
-            while ((length = is.read(buffer)) > 0) {
-                os.write(buffer, 0, length);
+        if (Intent.ACTION_SEND.equals(action)
+                && type != null) {
+            Log.d(TAG, "Started from ACTION.SEND");
+
+            Uri fileUri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
+            if (fileUri != null) {
+                String filename = getFileName(context, fileUri);
+                Log.d(TAG, "File received! Uri: " + fileUri);
+                Log.d(TAG, "Filename: \"" + filename + "\"");
+                openPopup(getDestinationName(filename), fileUri);
+            } else {
+                // TODO: Error Handling
             }
-        } catch (Exception e) {
+        }
+        if (Intent.ACTION_VIEW.equals(action)
+                && type != null) {
+            Log.d(TAG, "Started from ACTION.VIEW");
+
+            Uri fileUri = intent.getData();
+            if (fileUri != null) {
+                String filename = getFileName(context, fileUri);
+                Log.d(TAG, "File received! Uri: " + fileUri);
+                Log.d(TAG, "Filename: \"" + filename + "\"");
+                openPopup(getDestinationName(filename), fileUri);
+            } else {
+                // TODO: Error Handling
+            }
+        }
+    }
+
+    private void openPopup(String filename, Uri fileUri){
+        StandardPopup standardPopup = new StandardPopup(context, StandardPopup.MODE_ENTER_FILENAME,
+                context.getResources().getString(R.string.import_document_title),
+                context.getResources().getString(R.string.import_document_message),
+                context.getResources().getString(R.string.button_cancel),
+                context.getResources().getString(R.string.button_import));
+        standardPopup.addFileNames(documentManager.getNames());
+        filename = Strings.CS.removeEnd(filename, ".ewdoc");
+        standardPopup.setFilename(filename);
+        standardPopup.addPopupListener(new PopupListener() {
+            @Override
+            public void OnCancel() {
+                // Inform listeners
+                for (ImportListener listener: listeners){
+                    listener.onCancel();
+                }
+            }
+
+            @Override
+            public void OnSelected(String name) {
+                copyFile(fileUri, new File(context.getFilesDir() + "/Documents/" + name + ".ewdoc"), context);
+                // Inform listeners
+                for (ImportListener listener: listeners){
+                    listener.onImport(name);
+                }
+            }
+
+            @Override
+            public void OnConfirmed(String name) {
+
+            }
+        });
+        standardPopup.show();
+    }
+
+    public static void copyFile(Uri from, File to, Context context) {
+        try(InputStream inputStream = context.getContentResolver().openInputStream(from);
+            OutputStream outputStream = new FileOutputStream(to)){
+                byte[] buffer = new byte[4096];
+                int length;
+                while ((length = inputStream.read(buffer)) > 0){
+                    outputStream.write(buffer, 0, length);
+                }
+                outputStream.flush();
+        } catch (Exception e){
             e.printStackTrace();
-            // TODO: ERROR HANDLING
+            // TODO: Error-Handling
         }
     }
 
@@ -137,7 +174,11 @@ public class ImportManager implements ActivityResultCallback<Uri> {
         return oldName + " (" + counter + ").ewdoc";
     }
 
-    public Uri getDestinationUri(String filename){
+    public String getDestinationName(String filename){
+        // Remove .ewdoc from filename
+        if (!filename.endsWith(".ewdoc")){
+            filename += ".ewdoc";
+        }
         // Check if filename already exist
         ArrayList<DocumentGridData> documents = documentManager.getDocuments();
         for (DocumentGridData data: documents) {
@@ -146,7 +187,7 @@ public class ImportManager implements ActivityResultCallback<Uri> {
                 break;
             }
         }
-        return Uri.fromFile(new File(context.getFilesDir() + "/Documents/" + filename));
+        return filename;
     }
 
     private String getMimeType(Uri uri) {
@@ -161,6 +202,55 @@ public class ImportManager implements ActivityResultCallback<Uri> {
                     fileExtension.toLowerCase());
         }
         return mimeType;
+    }
+
+    // Generated by Github copilot reviewed by me
+    public static String getFileName(Context context, Uri uri) {
+        if (uri == null) return null;
+
+        // 1) Try query OpenableColumns.DISPLAY_NAME
+        if ("content".equalsIgnoreCase(uri.getScheme())) {
+            ContentResolver resolver = context.getContentResolver();
+            Cursor cursor = null;
+            try {
+                cursor = resolver.query(uri, new String[]{OpenableColumns.DISPLAY_NAME}, null, null, null);
+                if (cursor != null && cursor.moveToFirst()) {
+                    int idx = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+                    if (idx != -1) {
+                        String name = cursor.getString(idx);
+                        if (name != null && !name.isEmpty()) return name;
+                    }
+                }
+            } catch (Exception e) {
+                Log.w(TAG, "Error querying display name for uri: " + uri, e);
+            } finally {
+                if (cursor != null) cursor.close();
+            }
+
+            // 2) Try DocumentFile for SAF/document URIs
+            try {
+                DocumentFile doc = DocumentFile.fromSingleUri(context, uri);
+                if (doc.getName() != null && !doc.getName().isEmpty()) {
+                    return doc.getName();
+                }
+            } catch (Exception e) {
+                // ignore; best-effort only
+            }
+        }
+
+        // 3) Fallback: last path segment (works for file:// and some content Uris)
+        String path = uri.getPath();
+        if (path != null) {
+            int cut = path.lastIndexOf('/');
+            if (cut != -1 && cut + 1 < path.length()) {
+                String last = path.substring(cut + 1);
+                if (!last.isEmpty()) return last;
+            } else if (!path.isEmpty()) {
+                return path;
+            }
+        }
+
+        return null;
     }
 
     public void addOnImportListener(ImportListener listener){
