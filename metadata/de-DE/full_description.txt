@@ -1,0 +1,9 @@
+Eine einfache Android-App um altägyptische Texte anzuzeigen, zu schreiben und zu exportieren. Diese App unterstützt das professionelle Schreiben altägyptischer Texte unter Verwendung von <a href="https://en.wikipedia.org/wiki/Manuel_de_Codage">Manuel-de-Codage</a>-Standards.
+
+Derzeit werden vier grundlegende Konzepte des MdC-Codes unterstützt:
+<ul>
+<li><b>:</b> : Um Zeichen vertikal anzuordnen</li>
+<li><b>*</b> : Um Zeichen horizontal anzuordnen</li>
+<li><b>()</b> : Um Zeichen zu gruppieren</li>
+<li><b>!</b> und <b>!!</b> : Um einen Zeilenumbruch einzufügen</li>
+</ul>

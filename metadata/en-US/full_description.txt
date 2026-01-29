@@ -1,0 +1,9 @@
+This is a simple Android app for viewing, creating and exporting ancient Egyptian hieroglyphs. This app supports the professional writing of hieroglyphs using the Manuel de Codage.
+
+Currently, the app supports four basic MdC code concepts
+<ul>
+<li><b>:</b> : To align signs vertically</li>
+<li><b>*</b> : To align signs horizontally</li>
+<li><b>()</b> : To group signs</li>
+<li><b>!</b> and <b>!!</b> : To do a line break</li>
+</ul>
