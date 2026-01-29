@@ -1,0 +1,4 @@
+- Gradle projekt wurde geupdated und upgegraded
+- Fehler beim importieren von .ewdoc - Dateien behoben
+- Unterstützung für kleine Bildschirmgrößen hinzugefügt
+- Jetzt können User einen Namen für ein Dokument wählen, während sie es importieren
