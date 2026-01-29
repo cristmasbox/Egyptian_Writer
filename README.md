@@ -22,5 +22,10 @@ There are three ways to install the Egyptian Writer app:
 ## Version Catalog
 ### 10.01.2025@0.0.1
 This is the first release of the Egyptian Writer android app.
+### 29.01.2026@0.0.3
+- Gradle project updated and upgraded
+- Bug while importing .ewdoc files solved
+- Support for small screen sizes added
+- Users can now chose a name for the document while importing it
 ### latest Version
-`10.01.2025@0.0.1`
+`29.01.2026@0.0.3`
