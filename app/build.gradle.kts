@@ -12,8 +12,8 @@ android {
         applicationId = "com.blueapps.egyptianwriter"
         minSdk = 23
         targetSdk = 36
-        versionCode = 1
-        versionName = "10.01.2025@0.0.1"
+        versionCode = 2
+        versionName = "10.01.2025@0.0.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -37,6 +37,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.documentfile)
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
